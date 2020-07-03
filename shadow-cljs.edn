@@ -1,0 +1,30 @@
+{:dependencies [[binaryage/devtools       "1.0.2"]]
+
+ :source-paths ["src" "test"]
+
+ :builds {:browser-test-bootstrap
+          {:target     :bootstrap
+           :output-dir "target/browser-test/bootstrap"
+           :exclude    #{cljs.js}
+           :entries    [cljs.js bootstrap-require-macros.entry]
+           :macros     []}
+
+          :browser-test
+          {:target           :browser-test
+           :test-dir         "target/browser-test"
+           :devtools         {:http-port 8021
+                              :http-root "target/browser-test"}
+           :compiler-options {:pretty-print true}}
+
+          :karma-test-bootstrap
+          {:target     :bootstrap
+           :output-dir "target/karma/bootstrap"
+           :exclude    #{cljs.js}
+           :entries    [cljs.js bootstrap-require-macros.entry]
+           :macros     []}
+
+          :karma-test
+          {:target           :karma
+           :ns-regexp        ".*-test$"
+           :output-to        "target/karma/test.js"
+           :compiler-options {:pretty-print true}}}}
