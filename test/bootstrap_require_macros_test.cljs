@@ -20,7 +20,10 @@
                           (cljs/eval-str compiler-state-atom
                                "(require-macros '[boostrap-require-macros.macros-in-clojure :refer [macro-dependency-dialect]])
                                 (macro-dependency-dialect)"
-                               {:eval cljs/js-eval}
-                               (fn [_ {:keys [value]}]
-                                   (is (= "Clojure" value))
+                               "bootstrap-require-macros"
+                               {:eval cljs/js-eval
+                                :load (partial bootstrap/load compiler-state-atom)}
+                               (fn [{:keys [error value]}]
+                                   (is (nil? error))
+                                   (is (= "Clojure" res))
                                    (done))))))))
